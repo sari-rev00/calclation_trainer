@@ -17,9 +17,32 @@
             on_press:
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'training'
+                root.on_training_btn()
                 app.calc_screen.init_params()
                 app.calc_screen.set_dt_start()
                 app.calc_screen.timer_start()
+        BoxLayout:
+            size_hint_y: 1.0
+            orientation: 'horizontal'
+            Label:
+                size_hint_x: 1.0
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.3
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                text: "Type:"
+                font_size: 36
+            Spinner:
+                size_hint_x: 1.0
+                id: calc_type
+                halign: 'center'
+                valign: 'middle'
+                font_size: 36
+                text: root.type_choice[0]
+                values: root.type_choice
+
         Button:
             size_hint_y: 1.0
             id: upload_btn

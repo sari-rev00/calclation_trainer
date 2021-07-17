@@ -41,7 +41,8 @@ class DataManager():
         self.score_format = {
             "dt_start": None,
             "user_name": None,
-            "type": self.type,
+            "type": None,
+            "duration": None,
             "ans_num": int(0),
             "correct_num": int(0)
         }
@@ -85,6 +86,7 @@ class DataManager():
         list_keep = list()
         for score in self.list_score:
             score["user_name"] = deepcopy(self.user_name)
+            score["type"] = deepcopy(self.type)
             print(score)
             req = urllib.request.Request(url, json.dumps(score).encode(), headers)
             time.sleep(0.3)
@@ -104,7 +106,10 @@ class DataManager():
 dm = DataManager()
 
 
+TYPE_CHOICE = ("addition", "division")
+
 class MenuScreen(Screen):
+    type_choice = TYPE_CHOICE
     def on_upload_btn(self):
         if dm.is_valid:
             try:
@@ -114,6 +119,9 @@ class MenuScreen(Screen):
                 print("failed to upload, keep data")
         else:
             print("no valid data to upload")
+    
+    def on_training_btn(self):
+        dm.type = self.ids.calc_type.text
 
 
 class SettingScreen(Screen):
@@ -132,19 +140,31 @@ class Calculation():
     def __init__(self):
         return None
     
-    def get_eq_ans(self):
-        a = random.randrange(1, 10)
-        b = random.randrange(1, 10)
-        eq = "{} + {} = {}".format(
-            a, 
-            b, 
-            "?"
-        )
-        ans = a + b
+    def get_eq_ans(self, _type="addition"):
+        # addition ==========================
+        if _type == "addition":
+            a = random.randrange(1, 10)
+            b = random.randrange(1, 10)
+            eq = "{} + {} = {}".format(
+                a, 
+                b, 
+                "?"
+            )
+            ans = a + b
+        # division ==========================
+        elif _type == "division":
+            a = random.randrange(1, 9)
+            b = random.randrange(1, 9)
+            eq = "{} / {} = {}".format(
+                a * b, 
+                a, 
+                "?"
+            )
+            ans = b
         return eq, ans
 
 
-TIME_MAX_SEC = 5
+TIME_MAX_SEC = 30
 COUNT_MAX = 10
 class CalculatorScreen(Screen):
     eq = StringProperty()
@@ -162,16 +182,18 @@ class CalculatorScreen(Screen):
         self.result = ""
         self.ids.text_ans.text = ""
         self.count = COUNT_MAX
-        self.eq, self.ans = self.calc.get_eq_ans()
+        self.eq, self.ans = self.calc.get_eq_ans(_type=dm.type)
         self.score = deepcopy(dm.score_format)
+        self.score["duration"] = int(TIME_MAX_SEC)
 #        self.timer_start()
 
     
-    def next_eq(self, _=None):
+    def next_eq(self, _):
         if self.time > 0:
             self.result = ""
             self.ids.text_ans.text = ""
-            self.eq, self.ans = self.calc.get_eq_ans()
+#            self.eq, self.ans = self.calc.get_eq_ans(_type=dm.type)
+            self.eq, self.ans = self.calc.get_eq_ans(_type=dm.type)
 
     def buttonClicked(self):
         self.text = self.text_handler.get_text()
