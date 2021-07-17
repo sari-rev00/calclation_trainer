@@ -160,7 +160,7 @@ class Calculation():
         elif _type == "division":
             a = random.randrange(1, 9)
             b = random.randrange(1, 9)
-            eq = "{} / {} = {}".format(
+            eq = "{} ÷ {} = {}".format(
                 a * b, 
                 a, 
                 "?"
