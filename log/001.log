@@ -1,0 +1,112 @@
+# Check configuration tokens
+# Ensure build layout
+# Check configuration tokens
+# Preparing build
+# Check requirements for android
+# Run 'dpkg --version'
+# Cwd None
+Debian `dpkg' パッケージ管理プログラム バージョン 1.19.7 (amd64)。
+これはフリーソフトです; コピー条件については GNU 一般公有使用許諾書バージョン 2
+もしくはそれ以降を参照してください。このソフトウェアは無保証です。
+# Search for Git (git)
+#  -> found at /usr/bin/git
+# Search for Cython (cython)
+#  -> found at /home/arimura/anaconda3/bin/cython
+# Search for Java compiler (javac)
+#  -> found at /usr/lib/jvm/java-8-openjdk-amd64/bin/javac
+# Search for Java keytool (keytool)
+#  -> found at /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/keytool
+# Install platform
+# Run 'git config --get remote.origin.url'
+# Cwd /home/arimura/work/src/001_calculation_trainer/.buildozer/android/platform/python-for-android
+https://github.com/kivy/python-for-android.git
+# Run 'git branch -vv'
+# Cwd /home/arimura/work/src/001_calculation_trainer/.buildozer/android/platform/python-for-android
+* master 5a94d074 [origin/master] Merge pull request #2244 from Chronolife-team/native_services_upstream
+# Run '/usr/bin/python3 -m pip install -q  \'appdirs\' \'colorama>=0.3.3\' \'jinja2\' \'six\' \'enum34; python_version<"3.4"\' \'sh>=1.10; sys_platform!="nt"\' \'pep517<0.7.0"\' \'toml\''
+# Cwd None
+# Apache ANT found at /home/arimura/.buildozer/android/platform/apache-ant-1.9.4
+# Android SDK found at /home/arimura/.buildozer/android/platform/android-sdk
+# Recommended android's NDK version by p4a is: 19c
+# Android NDK found at /home/arimura/.buildozer/android/platform/android-ndk-r19c
+# Check application requirements
+# Check garden requirements
+# Compile platform
+# Run '/usr/bin/python3 -m pythonforandroid.toolchain create --dist_name=myapp --bootstrap=sdl2 --requirements=python3,kivy --arch armeabi-v7a --copy-libs --color=always --storage-dir="/home/arimura/work/src/001_calculation_trainer/.buildozer/android/platform/build-armeabi-v7a" --ndk-api=21'
+# Cwd /home/arimura/work/src/001_calculation_trainer/.buildozer/android/platform/python-for-android
+# Run '/home/arimura/.buildozer/android/platform/android-sdk/platform-tools/adb devices'
+# Cwd None
+List of devices attached
+2f6ab77e	device
+
+# Deploy on 2f6ab77e
+# Run '/home/arimura/.buildozer/android/platform/android-sdk/platform-tools/adb install -r "/home/arimura/work/src/001_calculation_trainer/bin/myapp-0.1-armeabi-v7a-debug.apk"'
+# Cwd /home/arimura/.buildozer/android/platform
+Performing Streamed Install
+Success
+# Application pushed.
+# Run on 2f6ab77e
+# Run '/home/arimura/.buildozer/android/platform/android-sdk/platform-tools/adb shell am start -n org.test.myapp/org.kivy.android.PythonActivity -a org.kivy.android.PythonActivity'
+# Cwd /home/arimura/.buildozer/android/platform
+Starting: Intent { act=org.kivy.android.PythonActivity cmp=org.test.myapp/org.kivy.android.PythonActivity }
+# Application started.
+# Run 'dpkg --version'
+# Cwd None
+Debian `dpkg' パッケージ管理プログラム バージョン 1.19.7 (amd64)。
+これはフリーソフトです; コピー条件については GNU 一般公有使用許諾書バージョン 2
+もしくはそれ以降を参照してください。このソフトウェアは無保証です。
+# Search for Git (git)
+#  -> found at /usr/bin/git
+# Search for Cython (cython)
+#  -> found at /home/arimura/anaconda3/bin/cython
+# Search for Java compiler (javac)
+#  -> found at /usr/lib/jvm/java-8-openjdk-amd64/bin/javac
+# Search for Java keytool (keytool)
+#  -> found at /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/keytool
+# Run '/home/arimura/.buildozer/android/platform/android-sdk/platform-tools/adb logcat *:S python:D'
+# Cwd /home/arimura/.buildozer/android/platform
+--------- beginning of crash
+--------- beginning of system
+--------- beginning of main
+07-17 22:51:51.595 26499 27122 I python  : Initializing Python for Android
+07-17 22:51:51.595 26499 27122 I python  : Setting additional env vars from p4a_env_vars.txt
+07-17 22:51:51.602 26499 27122 I python  : Changing directory to the one provided by ANDROID_ARGUMENT
+07-17 22:51:51.602 26499 27122 I python  : /data/user/0/org.test.myapp/files/app
+07-17 22:51:51.602 26499 27122 I python  : Preparing to initialize python
+07-17 22:51:51.602 26499 27122 I python  : _python_bundle dir exists
+07-17 22:51:51.602 26499 27122 I python  : calculated paths to be...
+07-17 22:51:51.602 26499 27122 I python  : /data/user/0/org.test.myapp/files/app/_python_bundle/stdlib.zip:/data/user/0/org.test.myapp/files/app/_python_bundle/modules
+07-17 22:51:51.603 26499 27122 I python  : set wchar paths...
+07-17 22:51:51.768 26499 27122 I python  : Initialized python
+07-17 22:51:51.768 26499 27122 I python  : AND: Init threads
+07-17 22:51:51.770 26499 27122 I python  : testing python print redirection
+07-17 22:51:51.777 26499 27122 I python  : Android path ['.', '/data/user/0/org.test.myapp/files/app/_python_bundle/stdlib.zip', '/data/user/0/org.test.myapp/files/app/_python_bundle/modules', '/data/user/0/org.test.myapp/files/app/_python_bundle/site-packages']
+07-17 22:51:51.778 26499 27122 I python  : os.environ is environ({'PATH': '/sbin:/system/sbin:/product/bin:/apex/com.android.runtime/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin', 'ANDROID_BOOTLOGO': '1', 'ANDROID_ROOT': '/system', 'ANDROID_ASSETS': '/system/app', 'ANDROID_DATA': '/data', 'ANDROID_STORAGE': '/storage', 'ANDROID_RUNTIME_ROOT': '/apex/com.android.runtime', 'ANDROID_TZDATA_ROOT': '/apex/com.android.tzdata', 'EXTERNAL_STORAGE': '/sdcard', 'ASEC_MOUNTPOINT': '/mnt/asec', 'BOOTCLASSPATH': '/apex/com.android.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javalib/core-libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com.android.runtime/javalib/bouncycastle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/android.test.base.jar:/system/framework/oppo-framework.jar:/system/framework/coloros-framework.jar:/system/framework/coloros-support-wrapper.jar:/system/framework/ifaamanager.jar:/system/framework/tcmiface.jar:/system/framework/telephony-ext.jar:/system/framework/qcom.fmradio.jar:/system/framework/com.nxp.nfc.nq.jar:/system/framework/QPerformance.jar:/system/framework/UxPerformance.jar:/system/framework/WfdCommon.jar:/apex/com.android.conscrypt/javalib/conscrypt.jar:/apex/com.android.media/javalib/updatable-media.jar', 'DEX2OATBOOTCLASSPATH': '/apex/com.android.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javalib/core-libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com.android.runtime/javalib/bouncycastle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/android.test.base.jar:/system/framework/oppo-framework.jar:/system/framework/coloros-framework.jar:/system/framework/coloros-support-wrapper.jar:/system/framework/ifaamanager.jar:/system/framework/tcmiface.jar:/system/framework/telephony-ext.jar:/system/framework/qcom.fmradio.jar:/system/framework/com.nxp.nfc.nq.jar:/system/framework/QPerformance.jar:/system/framework/UxPerformance.jar:/system/framework/WfdCommon.jar', 'SYSTEMSERVERCLASSPATH': '/system/framework/services.jar:/system/framework/ethernet-service.jar:/system/framework/wifi-service.jar:/system/framework/com.android.location.provider.jar:/system/framework/coloros-services.jar:/system/framework/oppo-services.jar', 'OPPO_CUSTOM_ROOT': '/oppo_custom', 'OPPO_ENGINEER_ROOT': '/oppo_engineering', 'OPPO_PRODUCT_ROOT': '/oppo_product', 'OPPO_VERSION_ROOT': '/oppo_version', 'OPPO_SPECIAL_PRELOAD_ROOT': '/special_preload', 'OPPO_COMMON_PRELOAD_ROOT': '/common_preload', 'OPPO_COTA_ROOT': '/my_cota', 'DOWNLOAD_CACHE': '/data/cache', 'XKIT': '/system/xbin/xkit_10', 'ANDROID_SOCKET_zygote_secondary': '19', 'ANDROID_SOCKET_usap_pool_secondary': '20', 'ANDROID_ENTRYPOINT': 'main.pyc', 'ANDROID_ARGUMENT': '/data/user/0/org.test.myapp/files/app', 'ANDROID_APP_PATH': '/data/user/0/org.test.myapp/files/app', 'ANDROID_PRIVATE': '/data/user/0/org.test.myapp/files', 'ANDROID_UNPACK': '/data/user/0/org.test.myapp/files/app', 'PYTHONHOME': '/data/user/0/org.test.myapp/files/app', 'PYTHONPATH': '/data/user/0/org.test.myapp/files/app:/data/user/0/org.test.myapp/files/app/lib', 'PYTHONOPTIMIZE': '2', 'P4A_BOOTSTRAP': 'SDL2', 'PYTHON_NAME': 'python', 'P4A_IS_WINDOWED': 'True', 'P4A_ORIENTATION': 'portrait', 'P4A_NUMERIC_VERSION': 'None', 'P4A_MINSDK': '21', 'LC_CTYPE': 'C.UTF-8'})
+07-17 22:51:51.778 26499 27122 I python  : Android kivy bootstrap done. __name__ is __main__
+07-17 22:51:51.778 26499 27122 I python  : AND: Ran string
+07-17 22:51:51.778 26499 27122 I python  : Run user program, change dir and execute entrypoint
+07-17 22:51:51.985 26499 27122 I python  : [INFO   ] [Logger      ] Record log in /data/user/0/org.test.myapp/files/app/.kivy/logs/kivy_21-07-17_2.txt
+07-17 22:51:51.985 26499 27122 I python  : [INFO   ] [Kivy        ] v1.11.1
+07-17 22:51:51.986 26499 27122 I python  : [INFO   ] [Kivy        ] Installed at "/data/user/0/org.test.myapp/files/app/_python_bundle/site-packages/kivy/__init__.pyc"
+07-17 22:51:51.986 26499 27122 I python  : [INFO   ] [Python      ] v3.8.1 (default, Jul 17 2021, 22:18:37) 
+07-17 22:51:51.986 26499 27122 I python  : [Clang 8.0.2 (https://android.googlesource.com/toolchain/clang 40173bab62ec7462
+07-17 22:51:51.986 26499 27122 I python  : [INFO   ] [Python      ] Interpreter at ""
+07-17 22:51:52.783 26499 27122 I python  : [INFO   ] [Factory     ] 184 symbols loaded
+07-17 22:51:53.208 26499 27122 I python  : [INFO   ] [Image       ] Providers: img_tex, img_dds, img_sdl2, img_gif (img_pil, img_ffpyplayer ignored)
+07-17 22:51:53.321 26499 27122 I python  : [INFO   ] [Text        ] Provider: sdl2
+07-17 22:51:53.438 26499 27122 I python  : [INFO   ] [Window      ] Provider: sdl2
+07-17 22:51:53.482 26499 27122 I python  : [INFO   ] [GL          ] Using the "OpenGL ES 2" graphics system
+07-17 22:51:53.483 26499 27122 I python  : [INFO   ] [GL          ] Backend used <sdl2>
+07-17 22:51:53.483 26499 27122 I python  : [INFO   ] [GL          ] OpenGL version <b'OpenGL ES 3.2 V@415.0 (GIT@0ac5ea1, If703410f3a, 1599645670) (Date:09/09/20)'>
+07-17 22:51:53.483 26499 27122 I python  : [INFO   ] [GL          ] OpenGL vendor <b'Qualcomm'>
+07-17 22:51:53.483 26499 27122 I python  : [INFO   ] [GL          ] OpenGL renderer <b'Adreno (TM) 610'>
+07-17 22:51:53.484 26499 27122 I python  : [INFO   ] [GL          ] OpenGL parsed version: 3, 2
+07-17 22:51:53.484 26499 27122 I python  : [INFO   ] [GL          ] Texture max size <16384>
+07-17 22:51:53.484 26499 27122 I python  : [INFO   ] [GL          ] Texture max units <16>
+07-17 22:51:53.527 26499 27122 I python  : [INFO   ] [Window      ] auto add sdl2 input provider
+07-17 22:51:53.530 26499 27122 I python  : [INFO   ] [Window      ] virtual keyboard not allowed, single mode, not docked
+07-17 22:51:53.672 26499 27122 I python  :  Traceback (most recent call last):
+07-17 22:51:53.672 26499 27122 I python  :    File "/home/arimura/work/src/001_calculation_trainer/.buildozer/android/app/main.py", line 26, in <module>
+07-17 22:51:53.673 26499 27122 I python  :    File "/home/arimura/work/src/001_calculation_trainer/.buildozer/android/platform/build-armeabi-v7a/build/python-installs/myapp/kivy/core/text/__init__.py", line 315, in register
+07-17 22:51:53.673 26499 27122 I python  :  OSError: File msgothic.ttc not found
+07-17 22:51:53.673 26499 27122 I python  : Python for android ended.

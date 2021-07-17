@@ -1,0 +1,187 @@
+
+<MenuScreen>:
+    BoxLayout:
+        padding: 50
+        orientation: 'vertical'
+        size: root.size
+
+        Label:
+            size_hint_y: 1.0
+            text: "Menu"
+            font_size: 48
+        Button:
+            size_hint_y: 1.0
+            id: start_training_btn
+            text: "Training"
+            font_size: 36
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'training'
+                root.on_training_btn()
+                app.calc_screen.init_params()
+                app.calc_screen.set_dt_start()
+                app.calc_screen.timer_start()
+        BoxLayout:
+            size_hint_y: 1.0
+            orientation: 'horizontal'
+            Label:
+                size_hint_x: 1.0
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.3
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                text: "Type:"
+                font_size: 36
+            Spinner:
+                size_hint_x: 1.0
+                id: calc_type
+                halign: 'center'
+                valign: 'middle'
+                font_size: 36
+                text: root.type_choice[0]
+                values: root.type_choice
+
+        Button:
+            size_hint_y: 1.0
+            id: upload_btn
+            text: "Upload"
+            font_size: 36
+            on_press:
+                root.on_upload_btn()
+        Button:
+            size_hint_y: 1.0
+            id: answer_btn
+            text: "Setting"
+            font_size: 36
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'setting'
+
+<SettingScreen>:
+    BoxLayout:
+        padding: 50
+        orientation: 'vertical'
+
+        Label:
+            size_hint_y: 1.0
+            text: "Setting"
+            font_size: 48
+        BoxLayout:
+            Label:
+                size_hint_x: 0.6
+                text: "User"
+                font_size: 36
+            TextInput:
+                size_hint_x: 1.0
+                id: text_user_name
+                size: 200, 30
+                line_height: 1
+                font_size: 36
+                multiline: False
+                hint_text: root.user_name
+        BoxLayout:
+            Label:
+                size_hint_x: 0.6
+                text: "Upload To"
+                font_size: 36
+            TextInput:
+                size_hint_x: 1.0
+                id: text_upload_to
+                size: 200, 30
+                line_height: 1
+                font_size: 36
+                multiline: False
+                hint_text: root.upload_to
+        BoxLayout:
+            Label:
+                size_hint_x: 1.0
+                text: ""
+        BoxLayout:
+            size_hint_y: 1.0
+            orientation: 'horizontal'
+            Button:
+                size_hint_x: 1.0
+                id: seting_back_btn
+                text: "Menu"
+                font_size: 36
+                on_press:
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'menu'
+            Label:
+                size_hint_x: 1.0
+            Button:
+                size_hint_x: 1.0
+                id: seting_save_btn
+                text: "Save"
+                font_size: 36
+                on_press:
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'menu'
+                    root.on_save_btn()
+
+            
+
+<CalculatorScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+
+        BoxLayout:
+            size_hint_y: 0.3
+            orientation: 'horizontal'
+            # SPEC -----------------------
+            Label:
+                text: "Addition"
+                font_size: 48
+            # TIMER -----------------------
+            Label:
+                text: "{}:{}".format(root.time // 60, str(root.time % 60).zfill(2))
+                font_size: 24
+
+        BoxLayout:
+            padding: 100
+            size_hint_y: 1.0
+            orientation: 'horizontal'
+            Label:
+                size_hint_x: 1.0
+                text: root.eq
+                font_size: 48
+            TextInput:
+#                size_hint: (.3, None)
+                size_hint_x: 0.3
+#                height: 30
+                id: text_ans
+                size: 200, 30
+                line_height: 1
+                font_size: 48
+                multiline: False
+                hint_text: ''
+            Label:
+                size_hint_x: 0.1
+                text: ""
+
+        BoxLayout:
+            padding: 10
+            size_hint_y: 0.3
+            orientation: 'horizontal'
+            Button:
+                size_hint_x: 1.0
+                id: back_btn
+                text: "Quit"
+                font_size: 36
+                on_press:
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'menu'
+                    app.calc_screen.timer_cancel()
+            Label:
+                size_hint_x: 1.0
+                text: root.result
+                font_size: 24
+            Button:
+                size_hint_x: 1.0
+                id: answer_btn
+                text: "Answer"
+                font_size: 36
+                on_press: root.check_ans_and_go_next()
