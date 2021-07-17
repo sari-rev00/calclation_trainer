@@ -19,6 +19,11 @@ import urllib.request
 import datetime
 from copy import deepcopy
 
+from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.resources import resource_add_path
+
+resource_add_path('./fonts')
+LabelBase.register(DEFAULT_FONT, 'msgothic.ttc')
 
 FILE_PATH = "./params.json"
 HOST = "192.168.0.51"
