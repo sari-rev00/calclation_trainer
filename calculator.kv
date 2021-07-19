@@ -141,30 +141,151 @@
                 font_size: 24
 
         BoxLayout:
-            padding: 100
+            padding: 50
             size_hint_y: 1.0
             orientation: 'horizontal'
+            # EQUATION --------------------
             Label:
                 size_hint_x: 1.0
                 text: root.eq
                 font_size: 48
-            TextInput:
-#                size_hint: (.3, None)
+            # SHOW TEXT_INPUT -------------------
+            Label:
                 size_hint_x: 0.3
-#                height: 30
-                id: text_ans
-                size: 200, 30
-                line_height: 1
+                text: root.text_input
                 font_size: 48
-                multiline: False
-                hint_text: ''
+
+#            TextInput:
+#                size_hint: (.3, None)
+#                size_hint_x: 0.3
+#                height: 30
+#                id: text_ans
+#                size: 200, 30
+#                line_height: 1
+#                font_size: 48
+#                multiline: False
+#                hint_text: ''
+            # BRANK -------------------
             Label:
                 size_hint_x: 0.1
+                text: ""
+        # KEY PAD ==========================================
+        BoxLayout:
+            size_hint_y: 1.8
+            orientation: 'horizontal'
+            # BRANK -------------------
+            Label:
+                size_hint_x: 1.0
+                text: ""
+            # KEY PAD -------------------
+            BoxLayout:
+                size_hint_x: 2.0
+                orientation: 'vertical'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 1.0
+                    # KEY 7 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_7
+                        text: "7"
+                        font_size: 24
+                        on_press: root.on_keypad("7")
+                    # KEY 8 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_8
+                        text: "8"
+                        font_size: 24
+                        on_press: root.on_keypad("8")
+                    # KEY 9 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_9
+                        text: "9"
+                        font_size: 24
+                        on_press: root.on_keypad("9")
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 1.0
+                    # KEY 4 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_4
+                        text: "4"
+                        font_size: 24
+                        on_press: root.on_keypad("4")
+                    # KEY 5 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_5
+                        text: "5"
+                        font_size: 24
+                        on_press: root.on_keypad("5")
+                    # KEY 6 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_6
+                        text: "6"
+                        font_size: 24
+                        on_press: root.on_keypad("6")
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 1.0
+                    # KEY 1 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_1
+                        text: "1"
+                        font_size: 24
+                        on_press: root.on_keypad("1")
+                    # KEY 2 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_2
+                        text: "2"
+                        font_size: 24
+                        on_press: root.on_keypad("2")
+                    # KEY 3 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_3
+                        text: "3"
+                        font_size: 24
+                        on_press: root.on_keypad("3")
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 1.0
+                    # KEY CLEAR ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_clr
+                        text: "CLR"
+                        font_size: 24
+                        on_press: root.on_keypad("clr")
+                    # KEY 0 ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_0
+                        text: "0"
+                        font_size: 24
+                        on_press: root.on_keypad("0")
+                    # KEY DEL ---------------
+                    Button:
+                        size_hint_x: 1.0
+                        id: key_pad_del
+                        text: "DEL"
+                        font_size: 24
+                        on_press: root.on_keypad("del")
+                    
+            # BRANK -------------------
+            Label:
+                size_hint_x: 1.0
                 text: ""
 
         BoxLayout:
             padding: 10
-            size_hint_y: 0.3
+            size_hint_y: 0.6
             orientation: 'horizontal'
             Button:
                 size_hint_x: 1.0

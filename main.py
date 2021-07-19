@@ -15,9 +15,15 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 import random
 import time
 import json
-import urllib.request
 import datetime
 from copy import deepcopy
+
+flug_urllib_usual = True
+if flug_urllib_usual:
+    import urllib.request
+else:
+    from kivy.network.urlrequest import UrlRequest
+    import urllib
 
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
@@ -86,20 +92,58 @@ class DataManager():
         url = "http://{}/upload".format(self.upload_to)
         print(url)
         headers = {
+#            'Content-type': 'application/x-www-form-urlencoded',
+#            'Accept': 'text/plain'
             'accept': 'application/json',
             'Content-Type': 'application/json'
         }
 #        print(len(self.list_score))
         list_keep = list()
+        def print_resp(req, result):
+            print(result)
+            return None
         for score in self.list_score:
             score["user_name"] = deepcopy(self.user_name)
             score["type"] = deepcopy(self.type)
             print(score)
-            req = urllib.request.Request(url, json.dumps(score).encode(), headers)
+
+#            req = urllib.request.Request(url, json.dumps(score).encode(), headers)
             time.sleep(0.3)
             try:
-                with urllib.request.urlopen(req, timeout=30) as res:
-                    body = res.read()
+                # GET ----------------
+                if False:
+                    if flug_urllib_usual:
+                        req = urllib.request.Request("http://{}/".format(self.upload_to))
+                        with urllib.request.urlopen(req) as res:
+                            body = res.read()
+                        print(body)
+                    else:
+                        req = UrlRequest(
+                            "http://{}/".format(self.upload_to),
+                            on_success=print_resp,
+                            on_failure=print_resp,
+                            timeout=10
+                        )
+                        print("result: {}".format(req.result))
+                        print("error: {}".format(req.error))
+                # POST ----------------
+                else:
+                    if flug_urllib_usual:
+                        req = urllib.request.Request(url, json.dumps(score).encode(), headers)
+                        with urllib.request.urlopen(req) as res:
+                            body = res.read()
+                        print(body)
+                    else:
+                        req = UrlRequest(
+                            url, 
+                            on_success=print_resp,
+                            on_failure=print_resp,
+                            req_body=urllib.parse.urlencode(score),
+                            req_headers=headers,
+                            timeout=10
+                        )
+                        print("result: {}".format(req.result))
+                        print("error: {}".format(req.error))
             except Exception as e:
                 print(e)
                 list_keep.append(score)
@@ -177,6 +221,7 @@ class CalculatorScreen(Screen):
     eq = StringProperty()
     ans = NumericProperty()
     text = StringProperty()
+    text_input = StringProperty()
     time = NumericProperty()
     result = StringProperty()
 
@@ -187,8 +232,9 @@ class CalculatorScreen(Screen):
     
     def init_params(self):
         self.result = ""
-        self.ids.text_ans.text = ""
+#        self.ids.text_ans.text = ""
         self.count = COUNT_MAX
+        self.text_input = ""
         self.eq, self.ans = self.calc.get_eq_ans(_type=dm.type)
         self.score = deepcopy(dm.score_format)
         self.score["duration"] = int(TIME_MAX_SEC)
@@ -198,7 +244,8 @@ class CalculatorScreen(Screen):
     def next_eq(self, _):
         if self.time > 0:
             self.result = ""
-            self.ids.text_ans.text = ""
+#            self.ids.text_ans.text = ""
+            self.text_input = ""
 #            self.eq, self.ans = self.calc.get_eq_ans(_type=dm.type)
             self.eq, self.ans = self.calc.get_eq_ans(_type=dm.type)
 
@@ -219,7 +266,8 @@ class CalculatorScreen(Screen):
         self.time -= int(1)
         if self.time <= 0:
             self.result = ""
-            self.ids.text_ans.text = ""
+#            self.ids.text_ans.text = ""
+            self.text_input = ""
             self.eq = "  finished !\npress Quit"
             dm.append_score(self.score)
             dm.is_valid = True
@@ -228,12 +276,29 @@ class CalculatorScreen(Screen):
     def set_dt_start(self):
         self.score["dt_start"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
+    def on_keypad(self, input):
+        if str(input) in [str(i) for i in range(1, 10)]:
+            self.text_input += str(input)
+        elif str(input) == "0":
+            if len(self.text_input) > int(0):
+                self.text_input += str(input)
+            else:
+                pass
+        elif str(input) == "del":
+            self.text_input = self.text_input[:-1]
+        elif str(input) == "clr":
+            self.text_input = ""
+        else:
+            pass
+
+    
     def check_ans_and_go_next(self):
         if self.time > 0:
             self.score["ans_num"] += int(1)
     #        self.count -= int(1)
             try:
-                ans_input = int(self.ids.text_ans.text)
+#                ans_input = int(self.ids.text_ans.text)
+                ans_input = int(self.text_input)
             except:
                 ans_input = str()
             if ans_input == self.ans:
@@ -249,7 +314,6 @@ class CalculatorScreen(Screen):
 class CalculatorApp(App):
     def __init__(self, **kwargs):
         super(CalculatorApp, self).__init__(**kwargs)
-        Window.size = (600, 450)
         self.title = 'Calculator'
 
     def build(self):
@@ -265,5 +329,6 @@ class CalculatorApp(App):
 
 
 if __name__ == '__main__':
+#    Window.size = (600, 450)
     app = CalculatorApp()
     app.run()
