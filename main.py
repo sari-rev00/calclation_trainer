@@ -16,23 +16,16 @@ import random
 import time
 import json
 import datetime
+import urllib.request
+import hashlib
 from copy import deepcopy
-
-flug_urllib_usual = True
-if flug_urllib_usual:
-    import urllib.request
-else:
-    from kivy.network.urlrequest import UrlRequest
-    import urllib
 
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
-
-use_https = True
-
 resource_add_path('./fonts')
 LabelBase.register(DEFAULT_FONT, './ArialCE.ttf')
 
+use_https = True
 
 FILE_PATH = "./params.json"
 HOST = "192.168.0.51"
@@ -97,12 +90,9 @@ class DataManager():
             url = "http://{}/upload".format(self.upload_to)
         print(url)
         headers = {
-#            'Content-type': 'application/x-www-form-urlencoded',
-#            'Accept': 'text/plain'
             'accept': 'application/json',
             'Content-Type': 'application/json'
         }
-#        print(len(self.list_score))
         list_keep = list()
         def print_resp(req, result):
             print(result)
@@ -111,47 +101,21 @@ class DataManager():
             score["user_name"] = deepcopy(self.user_name)
             score["type"] = deepcopy(self.type)
             print(score)
-
-#            req = urllib.request.Request(url, json.dumps(score).encode(), headers)
-            time.sleep(0.3)
+            code = hashlib.sha256(json.dumps(score["dt_start"]).encode("utf-8")).hexdigest()
+            data = {
+                "score": score,
+                "code": code
+            }
             try:
-                # GET ----------------
-                if False:
-                    if flug_urllib_usual:
-                        req = urllib.request.Request("http://{}/".format(self.upload_to))
-                        with urllib.request.urlopen(req) as res:
-                            body = res.read()
-                        print(body)
-                    else:
-                        req = UrlRequest(
-                            "http://{}/".format(self.upload_to),
-                            on_success=print_resp,
-                            on_failure=print_resp,
-                            timeout=10
-                        )
-                        print("result: {}".format(req.result))
-                        print("error: {}".format(req.error))
-                # POST ----------------
-                else:
-                    if flug_urllib_usual:
-                        req = urllib.request.Request(url, json.dumps(score).encode(), headers)
-                        with urllib.request.urlopen(req) as res:
-                            body = res.read()
-                        print(body)
-                    else:
-                        req = UrlRequest(
-                            url, 
-                            on_success=print_resp,
-                            on_failure=print_resp,
-                            req_body=urllib.parse.urlencode(score),
-                            req_headers=headers,
-                            timeout=10
-                        )
-                        print("result: {}".format(req.result))
-                        print("error: {}".format(req.error))
+                req = urllib.request.Request(url, json.dumps(data).encode(), headers)
+                with urllib.request.urlopen(req) as res:
+                    body = res.read()
+                print(body)
             except Exception as e:
                 print(e)
                 list_keep.append(score)
+            finally:
+                time.sleep(0.3)
         self.list_score = deepcopy(list_keep)
         if len(self.list_score) == int(0):
             self.is_valid = False
