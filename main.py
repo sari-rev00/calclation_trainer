@@ -28,6 +28,8 @@ else:
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
 
+use_https = True
+
 resource_add_path('./fonts')
 LabelBase.register(DEFAULT_FONT, './ArialCE.ttf')
 
@@ -88,8 +90,11 @@ class DataManager():
     def upload_to_gss(self):
         return None
     
-    def upload_to_server(self):
-        url = "http://{}/upload".format(self.upload_to)
+    def upload_to_server(self, use_https=use_https):
+        if use_https:
+            url = "https://{}/upload".format(self.upload_to)
+        else:
+            url = "http://{}/upload".format(self.upload_to)
         print(url)
         headers = {
 #            'Content-type': 'application/x-www-form-urlencoded',
