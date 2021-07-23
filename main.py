@@ -113,7 +113,7 @@ class DataManager():
             }
             try:
                 req = urllib.request.Request(url, json.dumps(data).encode(), headers)
-                with urllib.request.urlopen(req) as res:
+                with urllib.request.urlopen(req, context=context, timeout=30) as res:
                     body = res.read()
                 print(body)
             except Exception as e:
