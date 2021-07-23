@@ -20,6 +20,11 @@ import urllib.request
 import hashlib
 from copy import deepcopy
 
+# specify ccl protocol ---
+import ssl
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+
+# specify font ---
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
 resource_add_path('./fonts')

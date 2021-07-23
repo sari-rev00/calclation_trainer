@@ -19,7 +19,7 @@ source.include_exts = py,kv,json,ttc,ttf
 source.include_patterns = fonts/*
 
 # (list) Source files to exclude (let empty to not exclude anything)
-source.exclude_exts = spec
+source.exclude_exts = spec,txt,md
 
 # (list) List of directory to exclude (let empty to not exclude anything)
 source.exclude_dirs = bin,.git,log

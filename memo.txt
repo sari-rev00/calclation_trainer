@@ -1,3 +1,17 @@
 ●ビルド
+・環境
+　　・ubuntuを使用
+　　・conda deactivateでnative環境に切り替える
 ・buildozer -v android clean
 ・buildozer -v android debug
+
+●インストール
+・apkファイルをandroid端末の適当な場所にコピーしてインストールする
+
+●アプリの動作ログ
+・準備
+　・開発端末：　logcat
+　・android端末：　USBデバッグ有効化
+・android端末を開発端末に接続する
+・開発端末にて右記実行　buildozer logcat
+・android端末にてアプリを起動
